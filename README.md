@@ -4,6 +4,53 @@
 
 A personal story site by Paul Adcock / OwlLogics. The story of being let go from Syncreon / DP World — what happened, why it happened, what was built after, and what comes next.
 
+---
+
+## 🎬 Videos
+
+### "What They Threw Away" — Cinematic Video (Dark Ambient)
+- **File**: `video/fu_video.mp4`
+- **Duration**: 3:52 (231s)
+- **Resolution**: 1280×720, H264/AAC
+- **Narration**: TTS deep male voice with cinematic reverb
+- **Soundtrack**: Synthesized dark ambient — sub-bass drone, D minor pad, heartbeat pulse, cinematic sub-booms
+- **Visuals**: Dark text-driven cinema, floating ember particles, vignette, 22 animated scenes
+
+### "What They Threw Away" — Echonation Synthwave Edition (Fast Cars)
+- **File**: `video/fu_video_echonation.mp4` (if present — may still be rendering)
+- **Duration**: ~3:52
+- **Soundtrack**: 128 BPM synthwave — driving bass, four-on-the-floor kick, arpeggios in A minor, sidechain compression
+- **Visuals**: AI-generated fast car backgrounds (synthwave retrowave aesthetic), Ken Burns zoom/pan, speed lines, neon glow text
+
+---
+
+## 🧠 Mental Health Statement
+
+This project was created as an act of mental health recovery.
+
+Getting let go isn't just losing a job. It's losing your sense of worth, your routine, your stability, and your faith in fairness itself. This site and these videos are the result of channeling that pain into creation — not as denial, but as the most defiant form of recovery there is.
+
+**Building is therapy.**
+
+If you've been let go, discarded, or made to feel worthless by an employer — you are not alone, and you are not done.
+
+- **988 Suicide & Crisis Lifeline**: Call or text 988 (US)
+- **Crisis Text Line**: Text HOME to 741741
+- **NAMI HelpLine**: 1-800-950-6264
+
+---
+
+## 💚 Support This Work
+
+This project is free and always will be. If it helped you or resonated:
+
+- **PayPal**: [paypal.me/adcockp](https://paypal.me/adcockp)
+- **CashApp**: [cash.app/$papesxoxo](https://cash.app/$papesxoxo)
+
+Every dollar helps. Thank you.
+
+---
+
 ## What's On The Site
 
 ### Chapter One — The Story
@@ -37,27 +84,17 @@ Advocacy section. Legally protected speech about lived experience. Mental health
 
 > You didn't break me. You freed me.
 
+---
+
 ## Tech
 
 Single-file HTML/CSS/JS. No build step. No backend. No dependencies. Just a browser.
 
-Features:
-- Dark theme with red/gold gradient accents
-- Floating ember particle background with mouse repel
-- Scroll progress bar
-- Fade-in animations on scroll
-- Nav shrink on scroll
-- Timeline with glowing markers
-- Evidence cards with hover effects
-- Featured project card with gold badge
-- Pattern box with pulse animation
-- Fully responsive (mobile breakpoint at 768px)
+Video pipeline: Python (numpy + PIL + edge-tts) + ffmpeg. All synthesized locally — no external audio assets.
 
 ## Live URL
 
 **https://turtle-pb.github.io/fu/**
-
-Hosted on GitHub Pages. Auto-deploys on push to `main`.
 
 ## Related
 
