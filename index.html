@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Paul Adcock — Engineer, Builder, Survivor. The story of what happened, what was built, and what comes next.">
+<title>Paul Adcock — What They Threw Away</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   OwlLogics — FU Site
+   Copyright (c) 2024-2026 Paul Adcock / OwlLogics
+   All rights reserved. 35 U.S.C. 287(a) — Patents Reserved.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg: #0a0a0f;
+  --bg-alt: #12121a;
+  --surface: #1a1a25;
+  --accent: #ff3b3b;
+  --accent-glow: rgba(255, 59, 59, 0.4);
+  --gold: #ffb627;
+  --text: #e8e8f0;
+  --text-dim: #8888a0;
+  --text-bright: #ffffff;
+  --border: #2a2a3a;
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-mono: 'Courier New', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ─── Scroll Progress Bar ─── */
+#progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  z-index: 9999;
+  transition: width 0.1s;
+}
+
+/* ─── Navigation ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+nav .logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+nav .logo span { color: var(--text-bright); }
+nav ul {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+nav a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+nav a:hover { color: var(--accent); }
+
+/* ─── Sections ─── */
+section {
+  min-height: 100vh;
+  padding: 100px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+.container { max-width: 900px; margin: 0 auto; width: 100%; }
+
+/* ─── Hero ─── */
+#hero {
+  text-align: center;
+  background: radial-gradient(ellipse at center, rgba(255,59,59,0.08) 0%, var(--bg) 70%);
+}
+#hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  font-weight: bold;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, var(--text-bright) 0%, var(--accent) 50%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeInUp 1s ease;
+}
+#hero .tagline {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  color: var(--text-dim);
+  max-width: 600px;
+  margin: 0 auto 40px;
+  animation: fadeInUp 1s ease 0.3s both;
+}
+#hero .scroll-hint {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
+}
+#hero .badges {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 32px;
+  animation: fadeInUp 1s ease 0.6s both;
+}
+.badge {
+  padding: 8px 18px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  background: var(--surface);
+}
+
+/* ─── Section Headers ─── */
+.section-tag {
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--text-bright);
+  margin-bottom: 32px;
+  line-height: 1.15;
+}
+section h2 .accent { color: var(--accent); }
+section h2 .gold { color: var(--gold); }
+
+/* ─── Story Section ─── */
+#story { background: var(--bg-alt); }
+.story-text {
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: var(--text);
+}
+.story-text p { margin-bottom: 24px; }
+.story-text strong { color: var(--accent); font-weight: 600; }
+.story-text em { color: var(--gold); font-style: italic; }
+.story-quote {
+  border-left: 3px solid var(--accent);
+  padding: 20px 28px;
+  margin: 32px 0;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--text-bright);
+  background: rgba(255,59,59,0.05);
+  border-radius: 0 8px 8px 0;
+}
+
+/* ─── Built Section ─── */
+#built { background: var(--bg); }
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px var(--accent-glow);
+}
+.project-card:hover::before { transform: scaleX(1); }
+.project-card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+.project-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--text-bright);
+  margin-bottom: 8px;
+}
+.project-card .tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(255,59,59,0.15);
+  color: var(--accent);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.project-card p {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.project-card .stats {
+  display: flex;
+  gap: 20px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.project-card .stat {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+.project-card .stat strong {
+  color: var(--gold);
+  font-size: 1.2rem;
+  display: block;
+}
+
+/* ─── Fairness Section ─── */
+#fairness {
+  background: var(--bg-alt);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.fairness-content { max-width: 700px; }
+.fairness-content p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+.fairness-list {
+  list-style: none;
+  margin: 24px 0;
+}
+.fairness-list li {
+  padding: 12px 0 12px 32px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  color: var(--text);
+}
+.fairness-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 1.2rem;
+}
+.fairness-list li strong { color: var(--gold); }
+.callout {
+  background: linear-gradient(135deg, rgba(255,59,59,0.1), rgba(255,182,39,0.05));
+  border: 1px solid rgba(255,59,59,0.3);
+  border-radius: 12px;
+  padding: 32px;
+  margin: 32px 0;
+  text-align: center;
+}
+.callout p {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--text-bright);
+  font-style: italic;
+}
+
+/* ─── Next Chapter ─── */
+#next { text-align: center; }
+.next-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+.next-item {
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.3s;
+}
+.next-item:hover { border-color: var(--gold); }
+.next-item .big {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.next-item h4 {
+  color: var(--text-bright);
+  margin-bottom: 6px;
+}
+.next-item p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+/* ─── Footer ─── */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 48px 32px;
+  text-align: center;
+}
+footer .links {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+footer a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+  border-bottom: 1px solid transparent;
+}
+footer a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+footer .copyright {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 16px;
+  line-height: 1.6;
+}
+footer .owl {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+}
+
+/* ─── Animations ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 768px) {
+  nav { padding: 12px 16px; }
+  nav ul { gap: 14px; }
+  nav a { font-size: 0.75rem; }
+  section { padding: 80px 20px; }
+  .project-grid { grid-template-columns: 1fr; }
+}
+
+/* ─── Particles Background ─── */
+#particles {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<canvas id="particles"></canvas>
+
+<nav>
+  <div class="logo">OWL<span>LOGICS</span></div>
+  <ul>
+    <li><a href="#story">The Story</a></li>
+    <li><a href="#built">What I Built</a></li>
+    <li><a href="#fairness">Fairness</a></li>
+    <li><a href="#next">Next</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="container">
+    <h1>What They Threw Away</h1>
+    <p class="tagline">
+      The story of an engineer who delivered real value — and got discarded for it.
+      This is not a rant. This is a record. And this is what comes next.
+    </p>
+    <div class="badges">
+      <span class="badge">Engineer</span>
+      <span class="badge">Builder</span>
+      <span class="badge">Survivor</span>
+      <span class="badge">Still Standing</span>
+    </div>
+    <p class="scroll-hint" style="margin-top: 40px;">↓ Scroll for the truth</p>
+  </div>
+</section>
+
+<!-- ═══ STORY ═══ -->
+<section id="story">
+  <div class="container fade-in">
+    <div class="section-tag">Chapter One</div>
+    <h2>The <span class="accent">Story</span></h2>
+    <div class="story-text">
+      <p>
+        I'm Paul Adcock. I'm a software engineer — self-taught, relentless, and proud of every line of code I've written.
+        I worked at <strong>Syncreon / DP World</strong> in logistics and supply chain technology.
+        I showed up. I delivered. I built systems that actually worked.
+      </p>
+      <p>
+        And then they let me go.
+      </p>
+      <div class="story-quote">
+        "You can fire the person, but you can't fire what they built."
+      </div>
+      <p>
+        I won't name names. I won't fabricate. I don't need to. The truth is damning enough on its own.
+        What I <em>will</em> say is this: I was an engineer who cared deeply about the work, who put in
+        the hours, who solved real problems in a complex automotive logistics environment — and was
+        shown the door anyway.
+      </p>
+      <p>
+        No explanation that made sense. No recognition of what was delivered. Just gone.
+      </p>
+      <p>
+        But here's what they didn't count on: <strong>I'm a builder.</strong>
+        You can take away the desk, the badge, the title. You can't take away what's in my head,
+        what I know how to create, or what I'm going to build next. This page is the proof.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BUILT ═══ -->
+<section id="built">
+  <div class="container fade-in">
+    <div class="section-tag">Chapter Two</div>
+    <h2>What They <span class="accent">Threw Away</span></h2>
+    <p style="font-size: 1.1rem; color: var(--text-dim); margin-bottom: 16px; max-width: 600px;">
+      Every project below was built by one person. No team. No budget. Just skill, determination,
+      and the refusal to stop building. This is what a dismissed engineer is capable of.
+    </p>
+
+    <div class="project-grid">
+      <!-- AutoSeq -->
+      <div class="project-card">
+        <div class="icon">🏭</div>
+        <span class="tag">Enterprise PWA</span>
+        <h3>AutoSeq</h3>
+        <p>
+          Full automotive sequencing platform. 16 JS modules, 34 views, 8 OEM protocols,
+          19 OEM manufacturers, SAP IDoc/BAPI integration, Yard Management System, print server,
+          PWA with Windows installer, and a failsafe manual paper pick list system.
+        </p>
+        <div class="stats">
+          <div class="stat"><strong>16</strong>JS Modules</div>
+          <div class="stat"><strong>34</strong>Views</div>
+          <div class="stat"><strong>19</strong>OEMs</div>
+        </div>
+      </div>
+
+      <!-- OwlAI Studio -->
+      <div class="project-card">
+        <div class="icon">🦉</div>
+        <span class="tag">AI Platform</span>
+        <h3>OwlAI Studio</h3>
+        <p>
+          Local-first AI studio running entirely on-premises with Ollama. Multiple model
+          orchestration, custom presets, and zero cloud dependency. Full privacy, full control,
+          zero API costs.
+        </p>
+        <div class="stats">
+          <div class="stat"><strong>100%</strong>Local</div>
+          <div class="stat"><strong>$0</strong>Cloud Cost</div>
+        </div>
+      </div>
+
+      <!-- RemixMii -->
+      <div class="project-card">
+        <div class="icon">🎵</div>
+        <span class="tag">Music Platform</span>
+        <h3>RemixMii</h3>
+        <p>
+          Suno music hub with DJ mixer and arcade. Live on GitHub Pages. Integrates Suno's
+          platform for AI-assisted music creation, DJ controller support via Web MIDI API,
+          and an arcade mode for interactive playback.
+        </p>
+        <div class="stats">
+          <div class="stat"><strong>Live</strong>GitHub Pages</div>
+          <div class="stat"><strong>Web MIDI</strong>Controller</div>
+        </div>
+      </div>
+
+      <!-- OwlEmu -->
+      <div class="project-card">
+        <div class="icon">🎮</div>
+        <span class="tag">NES Emulator & ROM</span>
+        <h3>OwlEmu + Trippy Quest</h3>
+        <p>
+          NES emulator launcher built from scratch, plus an original NES ROM
+          (<em>paul0wl_trippy_quest.nes</em>) written in 6502 assembly with cc65.
+          Built because Mesen needed all DLLs, not just the exe. So I learned how it all worked.
+        </p>
+        <div class="stats">
+          <div class="stat"><strong>6502</strong>Assembly</div>
+          <div class="stat"><strong>cc65</strong>Toolchain</div>
+        </div>
+      </div>
+
+      <!-- LegalPath -->
+      <div class="project-card">
+        <div class="icon">⚖️</div>
+        <span class="tag">Legal Tech</span>
+        <h3>LegalPath</h3>
+        <p>
+          Self-contained legal technology platform. Client-side document generation,
+          workflow management, and template engine — all running in the browser with no backend.
+        </p>
+        <div class="stats">
+          <div class="stat"><strong>0</strong>Backends</div>
+          <div class="stat"><strong>100%</strong>Client-Side</div>
+        </div>
+      </div>
+
+      <!-- Hermes Agent Setup -->
+      <div class="project-card">
+        <div class="icon">🤖</div>
+        <span class="tag">AI Infrastructure</span>
+        <h3>Fully Local AI Agent</h3>
+        <p>
+          Configured a complete AI agent platform running 100% locally — Ollama models,
+          local STT via Whisper, edge TTS, local-first budget presets, zero cloud providers,
+          zero monthly API bills. $700+ invested, $0/month to run.
+        </p>
+        <div class="stats">
+          <div class="stat"><strong>$0</strong>/Month</div>
+          <div class="stat"><strong>20+</strong>Automated Tasks</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAIRNESS ═══ -->
+<section id="fairness">
+  <div class="container fade-in">
+    <div class="section-tag">Chapter Three</div>
+    <h2>Workplace <span class="gold">Fairness</span> &amp; <span class="accent">Mental Health</span></h2>
+    <div class="fairness-content">
+      <p>
+        Getting let go isn't just losing a job. It's losing your sense of worth, your routine,
+        your stability, and sometimes your faith in fairness itself. I've lived through that.
+        I'm still living through it.
+      </p>
+      <p>
+        This section exists because <strong>silence protects employers, not employees.</strong>
+        Speaking honestly about workplace experiences — your own lived experience — is
+        <em>legally protected speech</em>. And it matters.
+      </p>
+
+      <ul class="fairness-list">
+        <li><strong>Engineers are not disposable.</strong> You cannot build complex systems with people and then treat them like replaceable parts.</li>
+        <li><strong>Mental health is workplace health.</strong> The stress of job insecurity, unclear expectations, and sudden termination is real and lasting.</li>
+        <li><strong>Transparency matters.</strong> People deserve to know where they stand — not to be blindsided.</li>
+        <li><strong>NDA does not mean silence about your own experience.</strong> You can't share proprietary info, but you can absolutely talk about what happened to you.</li>
+        <li><strong>Building is therapy.</strong> Channeling pain into creation is not denial — it's the most defiant form of recovery.</li>
+      </ul>
+
+      <div class="callout">
+        <p>
+          If you've been let go, discarded, made to feel worthless —<br>
+          you are not alone, and you are not done.<br>
+          <strong style="color: var(--accent);">Build anyway.</strong>
+        </p>
+      </div>
+
+      <p>
+        I'm a GCU student studying Elementary Education and Special Education now.
+        I'm building a future where I help kids who learn differently — because the system
+        that failed me doesn't get to define me. And the company that let me go doesn't get
+        to write my ending.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NEXT CHAPTER ═══ -->
+<section id="next">
+  <div class="container fade-in">
+    <div class="section-tag">Chapter Four</div>
+    <h2>The <span class="gold">Next Chapter</span></h2>
+    <p style="font-size: 1.15rem; color: var(--text); max-width: 600px; margin: 0 auto 24px;">
+      They let me go. Here's what I did with it:
+    </p>
+    <div class="next-grid">
+      <div class="next-item">
+        <div class="big">6+</div>
+        <h4>Apps Shipped</h4>
+        <p>From enterprise PWA to NES ROMs</p>
+      </div>
+      <div class="next-item">
+        <div class="big">0</div>
+        <h4>Dollars in Cloud</h4>
+        <p>100% local-first infrastructure</p>
+      </div>
+      <div class="next-item">
+        <div class="big">∞</div>
+        <h4>Refusal to Quit</h4>
+        <p>Every setback became a build</p>
+      </div>
+      <div class="next-item">
+        <div class="big">BS</div>
+        <h4>In Progress</h4>
+        <p>Elem Ed &amp; Special Ed @ GCU</p>
+      </div>
+    </div>
+    <p style="margin-top: 48px; font-family: var(--font-display); font-size: 1.5rem; color: var(--text-bright); font-style: italic;">
+      You didn't break me. You freed me.
+    </p>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="owl">🦉 OWLLOGICS</div>
+  <div class="links">
+    <a href="https://github.com/Turtle-PB" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://youtube.com/@emupaul" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://www.instagram.com/paul0wl" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.linkedin.com/in/paul-adcock-b06546286" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://suno.com/@paul0wl" target="_blank" rel="noopener">Suno</a>
+  </div>
+  <div class="copyright">
+    © 2024-2026 Paul Adcock / OwlLogics. All rights reserved.<br>
+    Patents Reserved — 35 U.S.C. 287(a). Commercial licensing required for all applications.<br>
+    HMAC-SHA256 license keys via Web Crypto API. Personal use free.<br>
+    <br>
+    This page is personal expression and lived experience. No proprietary information disclosed.
+    No false claims made. The truth doesn't need embellishment.
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   Particle Background — Subtle floating embers
+   Copyright (c) 2024-2026 Paul Adcock / OwlLogics
+   ═══════════════════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height + Math.random() * 100;
+      this.size = Math.random() * 2 + 0.5;
+      this.speedY = Math.random() * 1.5 + 0.3;
+      this.speedX = (Math.random() - 0.5) * 0.5;
+      this.opacity = Math.random() * 0.4 + 0.1;
+      this.color = Math.random() > 0.7 ? '#ffb627' : '#ff3b3b';
+    }
+    update() {
+      this.y -= this.speedY;
+      this.x += this.speedX;
+      if (this.y < -10) {
+        this.y = canvas.height + 10;
+        this.x = Math.random() * canvas.width;
+      }
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.globalAlpha = this.opacity;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  for (let i = 0; i < 40; i++) particles.push(new Particle());
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* ═══ Scroll Progress + Fade In ═══ */
+(function() {
+  const progress = document.getElementById('progress');
+  const fadeEls = document.querySelectorAll('.fade-in');
+
+  function updateProgress() {
+    const scrollHt = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = (window.scrollY / scrollHt) * 100;
+    progress.style.width = pct + '%';
+  }
+
+  function checkFade() {
+    fadeEls.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) {
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    updateProgress();
+    checkFade();
+  });
+  checkFade();
+})();
+</script>
+
+</body>
+</html>
